@@ -1,0 +1,27 @@
+language: java
+jdk: oraclejdk8
+sudo: required
+services:
+- docker
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::7}
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+- if [ ! -d $HOME/google-cloud-sdk/bin ]; then rm -rf $HOME/google-cloud-sdk; curl
+  https://sdk.cloud.google.com | bash > /dev/null; fi
+- source $HOME/google-cloud-sdk/path.bash.inc
+- gcloud components update kubectl
+- gcloud version
+- chmod +x mvnw
+- chmod +x auth-gcloud.sh
+- chmod +x deploy.sh
+cache:
+  directories:
+  - "$HOME/.m2/repository"
+  - "$HOME/google-cloud-sdk/"
+script:
+- "./mvnw clean install -B"
+after_success:
+- bash auth-gcloud.sh
+- bash deploy.sh

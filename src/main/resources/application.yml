@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: shopfront
+  security:
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR_ADMIN
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+
+#logging:
+#  file: app.log
+
+shop-gateway.ribbon.listOfServers: shop-gateway:8080
