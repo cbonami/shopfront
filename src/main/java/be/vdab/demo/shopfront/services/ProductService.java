@@ -51,7 +51,7 @@ public class ProductService {
 
     private Map<String, ProductDTO> getProductDTOs() {
         ResponseEntity<List<ProductDTO>> productCatalogueResponse =
-                restTemplate.exchange("http://shop-gateway/productcatalogue/products/v1.0",
+                restTemplate.exchange("http://shop-gateway:80/productcatalogue/products/v1.0",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<ProductDTO>>() {
                         });
         List<ProductDTO> productDTOs = productCatalogueResponse.getBody();
@@ -63,7 +63,7 @@ public class ProductService {
     //    @HystrixCommand(fallbackMethod = "stocksNotFound") // Hystrix circuit breaker for fault-tolernace demo
     private Map<String, StockDTO> getStockDTOs() {
         ResponseEntity<List<StockDTO>> stockManagerResponse =
-                restTemplate.exchange("http://shop-gateway/stockmanager/stocks/v1.0",
+                restTemplate.exchange("http://shop-gateway:80/stockmanager/stocks/v1.0",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<StockDTO>>() {
                         });
         List<StockDTO> stockDTOs = stockManagerResponse.getBody();
